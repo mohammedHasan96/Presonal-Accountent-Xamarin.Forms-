@@ -3,6 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PersonalAccountant.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <Style TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="BorderColor" Value="DarkGray"/>
+                <Setter Property="Padding" Value="3" />
+                <Setter Property="Margin" Value="0" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

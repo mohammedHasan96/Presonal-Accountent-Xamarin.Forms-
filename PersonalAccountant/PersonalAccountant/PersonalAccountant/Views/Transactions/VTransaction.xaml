@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PersonalAccountant.Views.Transactions.VTransaction"
+             xmlns:conv="clr-namespace:PersonalAccountant.Converters">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TableView Grid.Row="0">
+            <TableRoot>
+                <TableSection Title="Transaction">
+                    <EntryCell x:Name="TitleCell" Placeholder="Transaction Title"/>
+                    <EntryCell x:Name="DescriptionCell" Placeholder="Transaction Shourt Description" />
+                    <EntryCell x:Name="ValueCell" Placeholder="Transaction Value" Keyboard="Numeric"/>
+                    <ViewCell>
+                        <StackLayout Margin="15,0"
+                                 Orientation="Horizontal">
+                            <Label Text="Transaction Date" VerticalOptions="CenterAndExpand"/>
+                            <DatePicker x:Name="TransactionDate" HorizontalOptions="EndAndExpand" Margin="10,0,0,0" />
+                        </StackLayout>
+                    </ViewCell>
+                    <ViewCell>
+                        <StackLayout Margin="15,0"
+                                 Orientation="Horizontal">
+                            <Label Text="Transaction Type" 
+                               VerticalOptions="CenterAndExpand"/>
+                            <Label x:Name="TypeLb"
+                                Text="Income" 
+                               VerticalOptions="CenterAndExpand"
+                               HorizontalOptions="EndAndExpand"
+                               TextColor="{conv:ColorConverter Value=Green}"/>
+                            <Switch x:Name="TypeSW"
+                                HorizontalOptions="EndAndExpand"
+                                Margin="10,0,0,0"
+                                IsToggled="True"
+                                OnColor="{conv:ColorConverter Value=OnColor}"
+                                Toggled="TypeSW_Toggled"/>
+                        </StackLayout>
+                    </ViewCell>
+                </TableSection>
+            </TableRoot>
+        </TableView>
+        <Button Grid.Row="1" 
+                VerticalOptions="Start"
+                Text="Done"
+                BackgroundColor="{conv:ColorConverter Value=Blue}"
+                TextColor="{conv:ColorConverter Value=Text}"
+                Margin="5"
+                BorderRadius="10"
+                Clicked="DoneButton_Clicked"/>
+        <Button Grid.Row="2"
+                Text="Cancel"
+                BackgroundColor="Transparent"
+                TextColor="{conv:ColorConverter Value=Blue}"
+                HorizontalOptions="Center"
+                Clicked="CancelButton_Clicked"/>
+    </Grid>
+</ContentPage>

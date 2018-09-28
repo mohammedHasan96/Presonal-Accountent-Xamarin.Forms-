@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PersonalAccountant.Views.Controls.TransactionCell"
+             xmlns:conv="clr-namespace:PersonalAccountant.Converters">
+    <ViewCell.View>
+        <Frame BorderColor="Gray"
+               CornerRadius="10"
+               BackgroundColor="White"
+               Padding="16,13"
+               Margin="0,0,0,5">
+            <StackLayout>
+                <!--Tusday 15 May 2018-->
+                <Label Text="{Binding TransactionDate, Converter={conv:DateFormaterConverter TrDate=True}}"
+                       FontAttributes="Bold"
+                       FontSize="13"/>
+                <BoxView BackgroundColor="Gray"
+                         HeightRequest="1"
+                         Margin="5,2" />
+                <StackLayout>
+                    <Label Text="{Binding Title}" 
+                           FontSize="13"
+                           FontAttributes="Bold"/>
+                    <Label Text="{Binding Description}" 
+                           FontSize="10"/>
+
+                    <BoxView BackgroundColor="Gray"
+                         HeightRequest="1"
+                         Margin="5,2" />
+                    <StackLayout Orientation="Horizontal">
+                        <StackLayout>
+                            
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Trasaction Type: " 
+                                       FontSize="10"/>
+                                <Label Text="{Binding Type, Converter={conv:IntToTypeConverter}}" 
+                                       TextColor="{Binding Color}"
+                                       FontAttributes="Bold"
+                                       Font="10"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="Add Date: " 
+                                       FontSize="9"
+                                       VerticalOptions="Center"/>
+                                <Label Text="{Binding InsertDate,Converter={conv:DateFormaterConverter}}" 
+                                       FontSize="9"
+                                       VerticalOptions="Center"
+                                       Margin="-7"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <Label Text="Value:"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               HorizontalOptions="EndAndExpand"
+                               VerticalOptions="Center"/>
+                        <Label Text="{Binding Value, Converter={conv:DoubleToDollarConveter}}"
+                               FontAttributes="Bold"
+                               FontSize="13"
+                               TextColor="{Binding Color}"
+                               VerticalOptions="Center"/>
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </Frame>
+    </ViewCell.View>
+</ViewCell>

@@ -1,14 +1,147 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:PersonalAccountant"
-             x:Class="PersonalAccountant.MainPage">
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:PersonalAccountant"
+            x:Class="PersonalAccountant.MainPage"
+            xmlns:cont="clr-namespace:ProgressRingControl.Forms.Plugin;assembly=ProgressRing.Forms.Plugin"
+            xmlns:conv="clr-namespace:PersonalAccountant.Converters"
+            xmlns:vc ="clr-namespace:PersonalAccountant.Views.Controls"
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            BarBackgroundColor="#2196F3"
+            BarTextColor="{conv:ColorConverter Value=Text}"
+            android:TabbedPage.BarItemColor="#d9d9d9"
+            android:TabbedPage.BarSelectedItemColor="{conv:ColorConverter Value=Text}">
+    <ContentPage Title="{conv:Translate Home}"
+                 Icon="home.png">
 
-    <StackLayout>
-        <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-    </StackLayout>
-
-</ContentPage>
+        <Grid Padding="3"
+                  BackgroundColor="{conv:ColorConverter Value=Background}"
+                  ColumnSpacing="3"
+                  RowSpacing="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Frame Padding="10"
+                       BorderColor="Gray"
+                       Grid.Row="0"
+                       Grid.RowSpan="2"
+                       Grid.Column="0"
+                       Grid.ColumnSpan="2">
+                <cont:ProgressRing x:Name="ProgressRing"
+                               Grid.Row="0"
+                               RingThickness="20" 
+                               RingProgressColor="{conv:ColorConverter Value=Green}"
+                               RingBaseColor="{conv:ColorConverter Value=Red}"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               HeightRequest="100"
+                               WidthRequest="100"/>
+            </Frame>
+            <Frame Grid.Column="2"
+                       Grid.Row="0"
+                       Grid.RowSpan="2">
+                <StackLayout VerticalOptions="Center">
+                    <Label Text="{conv:Translate Balance}" 
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           TextColor="{conv:ColorConverter Value=Blue}"/>
+                    <Label x:Name="BalanceLb" 
+                               HorizontalOptions="Center"
+                               VerticalOptions="EndAndExpand"
+                               VerticalTextAlignment="Start"/>
+                </StackLayout>
+            </Frame>
+            <Frame Grid.Column="0"
+                       Grid.Row="2">
+                <StackLayout>
+                    <Label Text="{conv:Translate Income}" 
+                           HorizontalOptions="Center"
+                           VerticalOptions="StartAndExpand"
+                           VerticalTextAlignment="End"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           TextColor="{conv:ColorConverter Value=Green}"/>
+                    <Label x:Name="IncomeLb" 
+                               HorizontalOptions="Center"
+                               VerticalOptions="EndAndExpand"
+                               VerticalTextAlignment="Start"/>
+                </StackLayout>
+            </Frame>
+            <Frame Grid.Column="1"
+                       Grid.Row="2">
+                <StackLayout VerticalOptions="Center">
+                    <Label Text="{conv:Translate Expence}"
+                           HorizontalOptions="Center"
+                           FontAttributes="Bold"
+                           FontSize="16"
+                           TextColor="{conv:ColorConverter Value=Red}"
+                           VerticalOptions="StartAndExpand"
+                           VerticalTextAlignment="End"/>
+                    <Label x:Name="ExpenceLb" 
+                               HorizontalOptions="Center"
+                               VerticalOptions="EndAndExpand"
+                               VerticalTextAlignment="Start"/>
+                </StackLayout>
+            </Frame>
+            <Frame Grid.Row="2"
+                   Grid.Column="2"
+                   BackgroundColor="{conv:ColorConverter Value=GreenButt}">
+                <Button Text="Add ToDo"
+                        TextColor="{conv:ColorConverter Value=BText}"
+                        Clicked="Button_Clicked"
+                        BackgroundColor="Transparent"/>
+            </Frame>
+            <ListView x:Name="ToDoListView"
+                      HasUnevenRows="True"
+                      Margin="0,0,0,114"
+                      SeparatorVisibility="None"
+                      VerticalOptions="Fill"
+                      ItemSelected="ToDoListView_ItemSelected"
+                      Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                      Grid.Row="3"
+                      IsPullToRefreshEnabled="True"
+                      Refreshing="ToDoListView_Refreshing">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <vc:TransactionCell />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+    </ContentPage>
+    <NavigationPage Title="{conv:Translate Text=Transactions}"
+                    Icon="transactions.png">
+        <x:Arguments>
+            <ContentPage Title="{conv:Translate Text=Transactions}">
+                <ContentPage.ToolbarItems>
+                    <ToolbarItem Icon="plus.png" 
+                                 Text="Add"
+                                 Order="Primary"
+                                 Activated="AddToolbarItem_Activated"/>
+                </ContentPage.ToolbarItems>
+                <ListView x:Name="TransactionsListView"
+                          HasUnevenRows="True"
+                          SeparatorVisibility="None"
+                          Margin="4,4,4,0"
+                          ItemSelected="TransactionsListView_ItemSelected">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <vc:TransactionCell>
+                                <vc:TransactionCell.ContextActions>
+                                    <MenuItem Text="Edit" Icon="edit.png" Clicked="EditMenuItem_Clicked" CommandParameter="{Binding}"/>
+                                    <MenuItem Text="Delete" Icon="delete.png" IsDestructive="True" Clicked="DeleteMenuItem_Clicked" CommandParameter="{Binding}"/>
+                                </vc:TransactionCell.ContextActions>
+                            </vc:TransactionCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ContentPage>
+        </x:Arguments>
+    </NavigationPage>
+</TabbedPage>
