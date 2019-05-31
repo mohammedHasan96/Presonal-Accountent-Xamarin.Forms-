@@ -1,4 +1,4 @@
-﻿#define Run
+﻿
 
 using PersonalAccountant.Models.DataAccess;
 using Plugin.Notifications;
@@ -18,9 +18,8 @@ namespace PersonalAccountant
         CultureInfo ci = CultureInfo.CurrentCulture;
         public App()
         {
-#if Run
             SqliteDA.InitialDB();
-#endif
+
             if (ci.EnglishName.ToLower().Contains("arabic"))
                 Values.ResourcesManager = new ResourceManager($"{ResourceId}.Ar", typeof(MainPage).Assembly);
             else
